@@ -1,0 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./archive.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Issue {
+  id            String  @id
+  code          String?
+  ordinalNumber Int?
+  month         Int?
+  year          Int?
+  cover         String?
+}
