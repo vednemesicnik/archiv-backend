@@ -1,2 +1,2 @@
-# archiv-backend
-The backend service to the archiv frontend and the archiv-manager frontend.
+# archive-backend
+The backend service to the archive frontend and the archive-manager frontend.
