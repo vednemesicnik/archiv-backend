@@ -4,6 +4,13 @@ import { config } from "./graphql/apollo-config"
 import multer from "multer"
 import fs from "fs"
 
+const ROOT_FOLDER = "public"
+const FILES_FOLDER = "issues"
+const FIELD_NAME = {
+  cover: "cover",
+  pdf: "pdf",
+}
+
 const app = express()
 const server = new ApolloServer(config)
 
@@ -11,14 +18,7 @@ server.applyMiddleware({ app })
 
 app.use(express.json())
 
-// It serve endpoint to upload cover image
-const ROOT_FOLDER = "public"
-const FILES_FOLDER = `issues`
-const FIELD_NAME = {
-  cover: "cover",
-  pdf: "pdf",
-}
-
+// Multer
 const storage = multer.diskStorage({
   destination: `${ROOT_FOLDER}/${FILES_FOLDER}/`,
   filename: function (req, file, cb) {
@@ -34,6 +34,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
+// It serve endpoint to upload files
 app.post(
   "/upload-files/:issueId",
   upload.fields([
@@ -62,11 +63,11 @@ app.post(
           status: true,
           data: [
             {
-              name: "cover",
+              name: FIELD_NAME.cover,
               path: coverImage.path.replace(`${ROOT_FOLDER}/`, ""),
             },
             {
-              name: "pdf",
+              name: FIELD_NAME.pdf,
               path: pdfFile.path.replace(`${ROOT_FOLDER}/`, ""),
             },
           ],
@@ -80,7 +81,7 @@ app.post(
   }
 )
 
-// It serves the folder with cover images
+// It serves the folder where issues are located
 app.use(express.static(`${__dirname}/public`))
 
 // Is starts the server
