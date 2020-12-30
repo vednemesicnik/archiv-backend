@@ -13,7 +13,7 @@ app.use(express.json())
 
 // It serve endpoint to upload cover image
 const ROOT_FOLDER = "public"
-const FILES_FOLDER = `public/issues`
+const FILES_FOLDER = `issues`
 const FIELD_NAME = {
   cover: "cover",
   pdf: "pdf",
@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
       fs.mkdirSync(`${ROOT_FOLDER}/${FILES_FOLDER}/${folderName}`)
     }
 
-    cb(null, `${folderName}/${file.filename}`)
+    cb(null, `${folderName}/${file.originalname}`)
   },
 })
 
